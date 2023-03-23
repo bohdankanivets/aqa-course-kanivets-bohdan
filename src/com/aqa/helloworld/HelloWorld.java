@@ -8,5 +8,8 @@ public class HelloWorld {
         System.out.println("Second commit");
 
         System.out.println("Third commit in main");
+
+
+        System.out.println("Command git cherry-pick");
     }
 }
