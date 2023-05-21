@@ -1,6 +1,7 @@
 package com.course.oop;
 
 import com.course.oop.exceptions.IncorrectFullNameException;
+import com.course.oop.exceptions.IncorrectPhoneNumberException;
 
 import java.util.ArrayList;
 
@@ -124,10 +125,13 @@ public class User {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (phoneNumber.charAt(0) == '+') {
-            this.phoneNumber = phoneNumber;
-        } else {
-            System.out.println("The phoneNumber field contains incorrect");
+        try {
+            if (phoneNumber.charAt(0) == '+') {
+                this.phoneNumber = phoneNumber;        }
+            else {
+                throw new IncorrectPhoneNumberException("The phoneNumber value it must starts from + symbol");        }
+        } catch (IncorrectPhoneNumberException e) {
+            e.printStackTrace();
         }
     }
 
