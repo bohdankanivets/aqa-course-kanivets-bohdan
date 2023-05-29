@@ -1,6 +1,6 @@
 package com.course.oop;
 
-public class Manager extends User {
+public class Manager extends User implements PrintInfo {
 
     private String position;
     private String responsibilityDistrict;

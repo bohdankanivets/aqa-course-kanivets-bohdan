@@ -2,16 +2,12 @@ package com.course.oop;
 
 public class RoleType {
 
-    private static final String ADMIN = "Admin";
-    private static final String VIEWER = "Viewer";
-    private static final String CUSTOMER = "Customer";
-    private static final String MAIN_CUSTOMER = "Main Customer";
     private boolean viewAll;
     private boolean editAll;
     private boolean addAll;
     private boolean deleteAll;
 
-    public RoleType(String role) {
+    public RoleType(Type role) {
 
         switch (role) {
             case ADMIN -> {
@@ -50,5 +46,12 @@ public class RoleType {
                ", addAll=" + addAll +
                ", deleteAll=" + deleteAll +
                '}';
+    }
+
+    public enum Type {
+        ADMIN,
+        VIEWER,
+        CUSTOMER,
+        MAIN_CUSTOMER
     }
 }

@@ -3,10 +3,13 @@ package com.course.oop;
 
 import com.course.oop.exceptions.IncorrectCardTypeException;
 
+import java.util.Objects;
+
+import static com.course.oop.Card.CardType.MASTER_CARD;
+import static com.course.oop.Card.CardType.VISA;
+
 public class Card {
 
-    private static final String VISA = "Visa";
-    private static final String MASTER_CARD = "MasterCard";
     private static int uniqueId = 0;
     private String id;
     private String number;
@@ -51,10 +54,12 @@ public class Card {
     }
 
     public void setCardType(String cardType) {
-        switch (cardType) {
-            case VISA -> this.cardType = VISA;
-            case MASTER_CARD -> this.cardType = MASTER_CARD;
-            default -> System.out.println("CardType " + cardType + " is incorrect");
+        if (Objects.equals(cardType.toLowerCase(), VISA.getValue().toLowerCase())) {
+            this.cardType = VISA.getValue();
+        } else if (Objects.equals(cardType.toLowerCase(), MASTER_CARD.getValue().toLowerCase())) {
+            this.cardType = MASTER_CARD.getValue();
+        } else {
+            System.out.println("CardType " + cardType + " is incorrect");
         }
     }
 
@@ -64,7 +69,8 @@ public class Card {
     }
 
     public static String verifyAndSetCardType(String cardType) {
-        if (cardType == VISA || cardType == MASTER_CARD) {
+        if (Objects.equals(cardType.toLowerCase(), VISA.getValue().toLowerCase())
+            || Objects.equals(cardType.toLowerCase(), MASTER_CARD.getValue().toLowerCase())) {
             return cardType;
         } else {
             throw new IncorrectCardTypeException("CardType " + cardType + " is incorrect");
@@ -80,5 +86,20 @@ public class Card {
                ", cvv='" + cvv + '\'' +
                ", cardType='" + cardType + '\'' +
                '}';
+    }
+
+    public enum CardType {
+        VISA("Visa"),
+        MASTER_CARD("MasterCard");
+
+        private final String type;
+
+        CardType(String type) {
+            this.type = type;
+        }
+
+        public String getValue() {
+            return this.type;
+        }
     }
 }

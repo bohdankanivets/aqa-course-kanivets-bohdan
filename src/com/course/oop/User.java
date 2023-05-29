@@ -1,10 +1,12 @@
 package com.course.oop;
 
 import com.course.oop.exceptions.IncorrectFullNameException;
+import com.course.oop.exceptions.IncorrectPhoneNumberException;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class User {
+public class User implements PrintInfo {
 
     private static int uniqueId = 0;
     private String id;
@@ -74,9 +76,21 @@ public class User {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public void setCards(Card card) {
+    public void setCards(List<Card> cards) {
         this.cards = new ArrayList<>();
-        this.cards.add(card);
+        this.cards.addAll(cards);
+    }
+
+    public void getCardNumbers() {
+        try {
+            ArrayList<String> cardNumbers = new ArrayList<>();
+            for (Card card : cards) {
+                cardNumbers.add(card.getNumber());
+            }
+            System.out.println("Card Numbers: " + cardNumbers);
+        } catch (NullPointerException e) {
+            System.out.println("User doesn't any credit cards");
+        }
     }
 
     public String getId() {
@@ -124,29 +138,35 @@ public class User {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (phoneNumber.charAt(0) == '+') {
-            this.phoneNumber = phoneNumber;
-        } else {
-            System.out.println("The phoneNumber field contains incorrect");
+        try {
+            if (phoneNumber.charAt(0) == '+') {
+                this.phoneNumber = phoneNumber;        }
+            else {
+                throw new IncorrectPhoneNumberException("The phoneNumber value it must starts from + symbol");        }
+        } catch (IncorrectPhoneNumberException e) {
+            e.printStackTrace();
         }
     }
 
-    public void printUserInfo() {
+    @Override
+    public void printInfo() {
        System.out.println(this);
     }
 
     @Override
     public String toString() {
         return "User{" +
-               "firstName='" + firstName + '\'' +
+               "id='" + id + '\'' +
+               ", firstName='" + firstName + '\'' +
                ", lastName='" + lastName + '\'' +
                ", fullName='" + fullName + '\'' +
                ", email='" + email + '\'' +
                ", phoneNumber='" + phoneNumber + '\'' +
-               ", billingAddress='" + billingAddress + '\'' +
-               ", deliveryAddress='" + deliveryAddress + '\'' +
-               ", role='" + role + '\'' +
-               ", manager='" + manager + '\'' +
+               ", billingAddress=" + billingAddress +
+               ", deliveryAddress=" + deliveryAddress +
+               ", cards=" + cards +
+               ", role=" + role +
+               ", manager=" + manager +
                '}';
     }
 
